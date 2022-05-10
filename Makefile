@@ -198,3 +198,21 @@ tui:
 	
 config:
 	cp -av example-config.toml config.toml
+	
+.PHONY: up
+up:
+	docker-compose -f docker-compose.yml up -d
+
+.PHONY: down
+down:
+	docker-compose -f docker-compose.yml down
+
+.PHONY: logs
+logs:
+	docker-compose -f docker-compose.yml logs -f
+
+.PHONY: restart
+restart: down up
+
+.PHONY: restart-logs
+restart-logs: down up logs
