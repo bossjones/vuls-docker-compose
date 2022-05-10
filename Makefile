@@ -191,7 +191,7 @@ report:
 	-config=./config.toml 
 
 local-report:
-	vuls report -format-list -config=$(PWD)/config.toml -results-dir=$(PWD)/vuls-results -log-dir=$(PWD)/vuls-log -vvv
+	vuls report -format-list -config=$(PWD)/config.toml -results-dir=$(PWD)/vuls-results -log-dir=$(PWD)/vuls-log
 
 tui:
 # path to config.toml in docker
@@ -204,7 +204,7 @@ tui:
 	-config=./config.toml 
 
 local-tui:
-	vuls tui -config=$(PWD)/config.toml -results-dir=$(PWD)/vuls-results -log-dir=$(PWD)/vuls-log -vvv
+	vuls tui -config=$(PWD)/config.toml -results-dir=$(PWD)/vuls-results -log-dir=$(PWD)/vuls-log
 
 config:
 	cp -av example-config.toml config.toml
