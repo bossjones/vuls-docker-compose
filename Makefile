@@ -1,4 +1,13 @@
-version:
+pull:
+	docker pull vuls/go-cve-dictionary
+	docker pull vuls/goval-dictionary
+	docker pull vuls/gost
+	docker pull vuls/go-exploitdb
+	docker pull vuls/go-msfdb
+	docker pull vuls/go-kev
+	docker pull vuls/vuls
+	
+version: pull
 	docker run  --rm  vuls/go-cve-dictionary version
 	docker run  --rm  vuls/goval-dictionary version
 	docker run  --rm  vuls/gost version
