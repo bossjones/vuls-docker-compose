@@ -157,12 +157,13 @@ fetch:
 	vuls/go-kev fetch kevuln
 	
 configtest:
+# path to config.toml in docker
 	docker run --rm -it\
 	-v ~/.ssh:/root/.ssh:ro \
 	-v $(PWD):/vuls \
 	-v $(PWD)/vuls-log:/var/log/vuls \
 	vuls/vuls configtest \
-	-config=./config.toml # path to config.toml in docker
+	-config=./config.toml 
 	
 scan:
 # path to config.toml in docker
