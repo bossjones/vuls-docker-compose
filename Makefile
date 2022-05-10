@@ -177,7 +177,7 @@ scan:
 	-config=./config.toml
 
 local-scan:
-	vuls scan -config=./config.toml -results-dir=./vuls-results -log-dir=./vuls-log -vvv
+	vuls scan -config=$(PWD)/config.toml -results-dir=$(PWD)/vuls-results -log-dir=$(PWD)/vuls-log -vvv
 
 report:
 # path to config.toml in docker
