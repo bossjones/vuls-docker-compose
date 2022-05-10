@@ -168,6 +168,7 @@ services:
       - $PWD/vuls-reports:/vuls-reports
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
+      - $PWD/vulsrepo-config.toml:/vulsrepo/vulsrepo-config.toml:ro
     ports:
       - "5111:5111/tcp"
     logging:
