@@ -1,0 +1,164 @@
+version: '3.8'
+# Since only root has access to /var/lib/docker and I'm running the Grafana agent under its own user on the host itself, changing the permissions to that directory seemed like a bad idea to me. After a bit of research I figured out how to make this work using the journald driver, which works nicely.
+# SOURCE: https://gist.github.com/ruanbekker/c6fa9bc6882e6f324b4319c5e3622460?permalink_comment_id=4009155#gistcomment-4009155
+x-logging:
+  &default-logging
+  driver: "journald"
+  options:
+    tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+
+services:
+  go-cve-dictionary:
+    image: vuls/go-cve-dictionary
+    container_name: "vuls-go-cve-dictionary"
+    volumes:
+      - $PWD:/vuls
+      - $PWD/go-cve-dictionary-log:/var/log/vuls
+      - $PWD/vuls-reports:/vuls-reports
+    ports:
+      - "1323:1323/tcp"
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.vuls-go-cve-dictionary.rule=Host(`vuls-go-cve-dictionary.scarlettlab.home`)"
+    - "traefik.http.routers.vuls-go-cve-dictionary.entrypoints=web"
+    - "traefik.http.services.vuls-go-cve-dictionary.loadbalancer.server.port=1323"
+    command: server --bind=0.0.0.0
+    logging:
+      driver: json-file
+      options:
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+  
+  goval-dictionary:
+    image: vuls/goval-dictionary
+    container_name: "vuls-goval-dictionary"
+    volumes:
+      - $PWD:/goval-dictionary
+      - $PWD/goval-dictionary-log:/var/log/goval-dictionary
+      - $PWD/vuls-reports:/vuls-reports
+    ports:
+      - "1324:1324/tcp"
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.vuls-goval-dictionary.rule=Host(`vuls-goval-dictionary.scarlettlab.home`)"
+    - "traefik.http.routers.vuls-goval-dictionary.entrypoints=web"
+    - "traefik.http.services.vuls-goval-dictionary.loadbalancer.server.port=1324"
+    command: server --bind=0.0.0.0
+    logging:
+      driver: json-file
+      options:
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+        
+  gost:
+    image: vuls/gost
+    container_name: "vuls-gost"
+    volumes:
+      - $PWD:/vuls
+      - $PWD/gost-log:/var/log/gost
+      - $PWD/vuls-reports:/vuls-reports
+    ports:
+      - "1325:1325/tcp"
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.vuls-gost.rule=Host(`vuls-gost.scarlettlab.home`)"
+    - "traefik.http.routers.vuls-gost.entrypoints=web"
+    - "traefik.http.services.vuls-gost.loadbalancer.server.port=1325"
+    command: server --bind=0.0.0.0
+    logging:
+      driver: json-file
+      options:
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+  
+  go-exploitdb:
+    image: vuls/go-exploitdb
+    container_name: "vuls-exploitdb"
+    volumes:
+      - $PWD:/vuls
+      - $PWD/go-exploitdb-log:/var/log/go-exploitdb
+      - $PWD/vuls-reports:/vuls-reports
+    ports:
+      - "1326:1326/tcp"
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.vuls-exploitdb.rule=Host(`vuls-exploitdb.scarlettlab.home`)"
+    - "traefik.http.routers.vuls-exploitdb.entrypoints=web"
+    - "traefik.http.services.vuls-exploitdb.loadbalancer.server.port=1326"
+    command: server --bind=0.0.0.0
+    logging:
+      driver: json-file
+      options:
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+        
+  go-msfdb:
+    image: vuls/go-msfdb
+    container_name: "vuls-msfdb"
+    volumes:
+      - $PWD:/go-msfdb
+      - $PWD/go-msfdb-log:/var/log/go-msfdb
+      - $PWD/vuls-reports:/vuls-reports
+    ports:
+      - "1327:1327/tcp"
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.vuls-msfdb.rule=Host(`vuls-msfdb.scarlettlab.home`)"
+    - "traefik.http.routers.vuls-msfdb.entrypoints=web"
+    - "traefik.http.services.vuls-msfdb.loadbalancer.server.port=1327"
+    command: server --bind=0.0.0.0
+    logging:
+      driver: json-file
+      options:
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+        
+  go-kev:
+    image: vuls/go-kev
+    container_name: "vuls-go-kev"
+    volumes:
+      - $PWD:/go-kev
+      - $PWD/go-kev-log:/var/log/go-kev
+      - $PWD/vuls-reports:/vuls-reports
+    ports:
+      - "1328:1328/tcp"
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.vuls-go-kev.rule=Host(`vuls-go-kev.scarlettlab.home`)"
+    - "traefik.http.routers.vuls-go-kev.entrypoints=web"
+    - "traefik.http.services.vuls-go-kev.loadbalancer.server.port=1328"
+    command: server --bind=0.0.0.0
+    logging:
+      driver: json-file
+      options:
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+        
+  vuls:
+    image: vuls/vuls
+    container_name: "vuls"
+    volumes:
+      - $PWD:/vuls
+      - $PWD/vuls-log:/var/log/vuls
+      - $PWD/vuls-reports:/vuls-reports
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - ~/.ssh:/root/.ssh:ro
+      
+    logging:
+      driver: json-file
+      options:
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+  
+  # SOURCE: https://vuls.io/docs/en/vulsrepo.html
+  vuls-repo:
+    image: ishidaco/vulsrepo
+    container_name: "vulsrepo"
+    tty: true
+    stdin_open: true
+    volumes:
+      - $PWD:/vuls
+      - $PWD/vuls-log:/var/log/vuls
+      - $PWD/vuls-reports:/vuls-reports
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    ports:
+      - "5111:5111/tcp"
+    logging:
+      driver: json-file
+      options:
+        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"

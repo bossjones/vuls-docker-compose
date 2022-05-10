@@ -1,0 +1,71 @@
+# SOURCE: https://github.com/vulsio/vulsctl/blob/master/config.toml.template
+[servers]
+
+[servers.localhost]
+host = "localhost"
+port = "local"
+scanMode = ["fast"]
+
+# SOURCE: https://vuls.io/docs/en/tutorial-docker.html
+# [servers.c74]
+# host            = "54.249.93.16"
+# port            = "22"
+# user            = "vuls-user"
+# # if ssh config file exists in .ssh, path to ssh config file in docker
+# sshConfigPath   = "/root/.ssh/config"
+# # path to ssh private key in docker
+# keyPath         = "/root/.ssh/id_rsa"
+
+# report
+
+# sqlite3 mode
+[cveDict]
+type = "sqlite3"
+SQLite3Path = "/vuls-reports/reports/cve.sqlite3"
+
+[ovalDict]
+type = "sqlite3"
+SQLite3Path = "/vuls-reports/reports/oval.sqlite3"
+
+[gost]
+type = "sqlite3"
+SQLite3Path = "/vuls-reports/reports/gost.sqlite3"
+
+[exploit]
+type = "sqlite3"
+SQLite3Path = "/vuls-reports/reports/go-exploitdb.sqlite3"
+
+[metasploit]
+type = "sqlite3"
+SQLite3Path = "/vuls-reports/reports/db/go-msfdb.sqlite3"
+
+[kevuln]
+type = "sqlite3"
+SQLite3Path = "/vuls-reports/reports/db/go-kev.sqlite3"
+
+# ###############################################
+# # http mode
+# ###############################################
+# [cveDict]
+# type = "http"
+# url = "http://0.0.0.0:1323"
+# 
+# [ovalDict]
+# type = "http"
+# url = "http://0.0.0.0:1324"
+# 
+# [gost]
+# type = "http"
+# url = "http://0.0.0.0:1325"
+# 
+# [exploit]
+# type = "http"
+# url = "http://0.0.0.0:1326"
+# 
+# [metasploit]
+# type = "http"
+# url = "http://0.0.0.0:1327"
+# 
+# [kevuln]
+# type = "http"
+# url = "http://hostname:1328"
