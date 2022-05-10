@@ -11,6 +11,8 @@ services:
   go-cve-dictionary:
     image: vuls/go-cve-dictionary
     container_name: "vuls-go-cve-dictionary"
+    tty: true
+    stdin_open: true
     volumes:
       - $PWD:/vuls
       - $PWD/go-cve-dictionary-log:/var/log/vuls
@@ -31,6 +33,8 @@ services:
   goval-dictionary:
     image: vuls/goval-dictionary
     container_name: "vuls-goval-dictionary"
+    tty: true
+    stdin_open: true
     volumes:
       - $PWD:/goval-dictionary
       - $PWD/goval-dictionary-log:/var/log/goval-dictionary
@@ -51,6 +55,8 @@ services:
   gost:
     image: vuls/gost
     container_name: "vuls-gost"
+    tty: true
+    stdin_open: true
     volumes:
       - $PWD:/vuls
       - $PWD/gost-log:/var/log/gost
@@ -71,6 +77,8 @@ services:
   go-exploitdb:
     image: vuls/go-exploitdb
     container_name: "vuls-exploitdb"
+    tty: true
+    stdin_open: true
     volumes:
       - $PWD:/vuls
       - $PWD/go-exploitdb-log:/var/log/go-exploitdb
@@ -91,6 +99,8 @@ services:
   go-msfdb:
     image: vuls/go-msfdb
     container_name: "vuls-msfdb"
+    tty: true
+    stdin_open: true
     volumes:
       - $PWD:/go-msfdb
       - $PWD/go-msfdb-log:/var/log/go-msfdb
@@ -111,6 +121,8 @@ services:
   go-kev:
     image: vuls/go-kev
     container_name: "vuls-go-kev"
+    tty: true
+    stdin_open: true
     volumes:
       - $PWD:/go-kev
       - $PWD/go-kev-log:/var/log/go-kev
@@ -128,21 +140,21 @@ services:
       options:
         tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
         
-  vuls:
-    image: vuls/vuls
-    container_name: "vuls"
-    volumes:
-      - $PWD:/vuls
-      - $PWD/vuls-log:/var/log/vuls
-      - $PWD/vuls-reports:/vuls-reports
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-      - ~/.ssh:/root/.ssh:ro
+  # vuls:
+  #   image: vuls/vuls
+  #   container_name: "vuls"
+  #   volumes:
+  #     - $PWD:/vuls
+  #     - $PWD/vuls-log:/var/log/vuls
+  #     - $PWD/vuls-reports:/vuls-reports
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - /etc/timezone:/etc/timezone:ro
+  #     - ~/.ssh:/root/.ssh:ro
       
-    logging:
-      driver: json-file
-      options:
-        tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+  #   logging:
+  #     driver: json-file
+  #     options:
+  #       tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
   
   # SOURCE: https://vuls.io/docs/en/vulsrepo.html
   vuls-repo:

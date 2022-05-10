@@ -1,0 +1,5 @@
+# https://vuls.io/docs/en/vulsrepo.html
+[Server]
+rootPath = "/vuls"
+resultsPath  = "/vuls-reports"
+serverPort  = "5111"
