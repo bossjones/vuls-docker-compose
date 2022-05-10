@@ -24,7 +24,7 @@ HAVE_BREW=$(shell brew --prefix >/dev/null 2>&1; echo $$? )
 PR_SHA                := $(shell git rev-parse HEAD)
 
 define ASCILOGO
-prometheus-docker-compose
+vuls-docker-compose
 =======================================
 endef
 
@@ -174,7 +174,10 @@ scan:
 	-v /etc/localtime:/etc/localtime:ro \
 	-v /etc/timezone:/etc/timezone:ro \
 	vuls/vuls scan \
-	-config=./config.toml 
+	-config=./config.toml
+
+local-scan:
+	vuls scan -config=./config.toml -results-dir=./vuls-results -log-dir=./vuls-log -vvv
 
 report:
 # path to config.toml in docker
